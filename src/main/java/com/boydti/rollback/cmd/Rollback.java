@@ -100,9 +100,9 @@ public class Rollback {
                         @Override
                         public void run(SimpleBlockChange change) {
                             BaseBlock block = FaweCache.CACHE_BLOCK[change.combinedFrom];
-                            mutable.x = change.x;
-                            mutable.y = change.y;
-                            mutable.z = change.z;
+                            mutable.setX(change.x);
+                            mutable.setY(change.y);
+                            mutable.setY(change.z);
                             if (change.tileFrom != null) {
                                 block = new BaseBlock(block.getId(), block.getData(), change.tileFrom);
                             }

@@ -53,13 +53,13 @@ public class PlayerEvents implements Listener {
         }
         Block block;
         switch (event.getAction()) {
-            case PlayerInteractEvent.LEFT_CLICK_AIR:
+            case LEFT_CLICK_AIR:
                 block = player.getTargetBlock(64);
                 if (block == null) {
                     return;
                 }
                 break;
-            case PlayerInteractEvent.RIGHT_CLICK_AIR:
+            case RIGHT_CLICK_AIR:
                 FawePlayer fp = FawePlayer.wrap(player);
                 com.sk89q.worldedit.entity.Player wePlayer = fp.getPlayer();
                 WorldVectorFace pos = wePlayer.getBlockTraceFace(256, true);
@@ -72,10 +72,10 @@ public class PlayerEvents implements Listener {
                     return;
                 }
                 break;
-            case PlayerInteractEvent.RIGHT_CLICK_BLOCK:
+            case RIGHT_CLICK_BLOCK:
                 block = event.getBlock().getSide(event.getFace());
                 break;
-            case PlayerInteractEvent.LEFT_CLICK_BLOCK:
+            case LEFT_CLICK_BLOCK:
                 block = event.getBlock();
                 break;
             default:
