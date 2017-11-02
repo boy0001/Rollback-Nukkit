@@ -1,6 +1,5 @@
 package com.boydti.rollback.database;
 
-import com.boydti.fawe.config.Settings;
 import com.boydti.fawe.object.RunnableVal;
 import com.boydti.fawe.util.MathMan;
 import com.boydti.fawe.util.TaskManager;
@@ -150,7 +149,7 @@ public abstract class SQLDatabase extends AbstractLogger {
         return finalCompressedArray;
     }
     
-    private final byte[] buffer = new byte[531441]; //TODO: This is probably awful ( 531441 was from Settings.HISTORY.BUFFER_SIZE )
+    private final byte[] buffer = new byte[531441]; //TODO: This is probably awful ( 531441 was from fawe.config.Settings.HISTORY.BUFFER_SIZE )
     
     public CompoundTag toTag(byte[] compressed) {
         if (compressed == null) {
@@ -472,11 +471,13 @@ public abstract class SQLDatabase extends AbstractLogger {
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, prefix + "timestamp", null);
             if (tables.next()) {
-                // Table exists
-                try (PreparedStatement stmt = connection.prepareStatement("SELECT `time` from `" + prefix + "timestamp`")) {
-                    ResultSet r = stmt.executeQuery();
-                    BASE_TIME = r.getLong(1);
-                }
+				// Table exists
+            	while(tables.next()) {
+    				try (PreparedStatement stmt = connection.prepareStatement("SELECT `time` from `" + prefix + "timestamp`")) {
+    					ResultSet r = stmt.executeQuery();
+    					BASE_TIME = r.getLong(1);
+    				}
+            	}
             } else {
                 BASE_TIME = (System.currentTimeMillis() >> TIME_PARTITION);
                 try (Statement stmt = connection.createStatement()) {

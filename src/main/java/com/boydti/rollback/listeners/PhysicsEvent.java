@@ -29,16 +29,16 @@ public class PhysicsEvent extends BasicListener {
             return;
         }
         Block block = event.getBlock();
+        AbstractLogger logger = LogAPI.getLogger(block.getLevel());
         switch (block.getId()) {
-            case 8: // Liquids
-            case 9:
-            case 10:
-            case 11:
-                AbstractLogger logger = LogAPI.getLogger(block.getLevel());
+            case 8: // flowing water
+            case 9: //water
+            case 10: //flowing lava
+            case 11: //lava
                 logger.trackLiquid(LogUser.LIQUID.ID, block);
                 return;
             default:
-                LogAPI.getLogger(block.getLevel()).logPhysics(block);
+                logger.logPhysics(block);
                 return;
         }
     }

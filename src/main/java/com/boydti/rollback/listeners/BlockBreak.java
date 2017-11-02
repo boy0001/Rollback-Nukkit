@@ -22,7 +22,7 @@ public class BlockBreak extends BasicListener {
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerBucketFill(PlayerBucketFillEvent event) {
+    public void onPlayerBucketFill(PlayerBucketFillEvent event) {  //TODO: does not log correctly
         Player player = event.getPlayer();
         LogAPI.getLogger(player.getLevel()).logPlayerBreak(player, event.getBlockClicked(), true);
     }

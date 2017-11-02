@@ -26,7 +26,6 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.history.changeset.ChangeSet;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Rollback {
@@ -65,7 +64,6 @@ public class Rollback {
         // Rollback
         Location loc = player.getLocation();
         final int x = loc.getFloorX();
-        int y = loc.getFloorY();
         final int z = loc.getFloorZ();
         
         if (fp.getMeta("fawe_action") != null) {

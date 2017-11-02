@@ -60,7 +60,7 @@ public class PlayerEvents implements Listener {
                 }
                 break;
             case RIGHT_CLICK_AIR:
-                FawePlayer fp = FawePlayer.wrap(player);
+                FawePlayer<Player> fp = FawePlayer.wrap(player);
                 com.sk89q.worldedit.entity.Player wePlayer = fp.getPlayer();
                 WorldVectorFace pos = wePlayer.getBlockTraceFace(256, true);
                 if (pos == null) {
@@ -72,12 +72,12 @@ public class PlayerEvents implements Listener {
                     return;
                 }
                 break;
-            case RIGHT_CLICK_BLOCK:
-                block = event.getBlock().getSide(event.getFace());
-                break;
-            case LEFT_CLICK_BLOCK:
-                block = event.getBlock();
-                break;
+//            case RIGHT_CLICK_BLOCK: //TODO: some weird shit around here - tbh idk what these two are doing different.
+//                block = event.getBlock().getSide(event.getFace());
+//                break;
+//            case LEFT_CLICK_BLOCK:
+//                block = event.getBlock();
+//                break;
             default:
                 return;
         }
@@ -105,6 +105,7 @@ public class PlayerEvents implements Listener {
                     if (changes.isEmpty()) {
                         fp.sendMessage(BBC.color(Config.PREFIX + "No changes."));
                     } else {
+                    	player.sendMessage(BBC.color("=============================="));
                         for (SimpleBlockChange change : changes) {
                             String name = LogUser.getName(change.player);
                             String age = MainUtil.secToTime((System.currentTimeMillis() - change.timestamp) / 1000);
