@@ -114,7 +114,7 @@ public class Rollback {
                 } catch (FaweException e) {
                     BBC.WORLDEDIT_CANCEL_REASON.send(fp, e.getMessage());
                 }
-                session.flushQueue();
+                session.flushQueue(); //TODO: Error thrown here (https://hastebin.com/lexebayaju.pl)
                 fp.getSession().remember(session);
                 player.sendMessage(BBC.getPrefix() + BBC.ACTION_COMPLETE.format((System.currentTimeMillis() - start) / 1000));
                 fp.deleteMeta("fawe_action");

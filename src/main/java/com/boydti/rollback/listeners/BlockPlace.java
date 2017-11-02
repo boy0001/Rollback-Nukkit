@@ -29,9 +29,8 @@ public class BlockPlace extends BasicListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) { //TODO: If a liquid is placed on any block other than the bottom block it is not logged. (or doesn't show up in inspection?)
         Player player = event.getPlayer();
-        Block block = event.getBlockClicked().getSide(event.getBlockFace());
+        Block block = event.getBlockClicked();
         Item bucket = event.getBucket();
-        int combinedTo = FaweCache.getCombined(bucket.getId(), bucket.getDamage());
-        LogAPI.getLogger(player.getLevel()).logBlock(player.getName(), block.getFloorX(), block.getFloorY(), block.getFloorZ(), (short) 0, (short) combinedTo);
-    }
+        LogAPI.getLogger(player.getLevel()).logBlock(player.getName(), block.getFloorX(), block.getFloorY(), block.getFloorZ(), (short) 0, (short) FaweCache.getCombined(bucket.getDamage(), 0));
+        }
 }

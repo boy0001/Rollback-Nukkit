@@ -368,7 +368,7 @@ public abstract class SQLDatabase extends AbstractLogger {
                     stmt.executeUpdate();
                 }
                 try (PreparedStatement stmt = connection.prepareStatement(UPDATE_TIME_BLOCKSNBT.replace("$", table + "").replace("?", "" + shift))) {
-                    stmt.executeUpdate();
+                    stmt.executeUpdate(); //TODO: Error thrown here (https://hastebin.com/nucuxovahu.pl)
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -475,7 +475,7 @@ public abstract class SQLDatabase extends AbstractLogger {
             	while(tables.next()) {
     				try (PreparedStatement stmt = connection.prepareStatement("SELECT `time` from `" + prefix + "timestamp`")) {
     					ResultSet r = stmt.executeQuery();
-    					BASE_TIME = r.getLong(1);
+    					BASE_TIME = r.getLong("time");
     				}
             	}
             } else {
