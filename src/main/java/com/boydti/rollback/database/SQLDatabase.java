@@ -150,7 +150,7 @@ public abstract class SQLDatabase extends AbstractLogger {
         return finalCompressedArray;
     }
     
-    private final byte[] buffer = new byte[Settings.HISTORY.BUFFER_SIZE];
+    private final byte[] buffer = new byte[531441]; //TODO: This is probably awful ( 531441 was from Settings.HISTORY.BUFFER_SIZE )
     
     public CompoundTag toTag(byte[] compressed) {
         if (compressed == null) {

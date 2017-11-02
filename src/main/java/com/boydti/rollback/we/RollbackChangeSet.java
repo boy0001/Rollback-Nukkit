@@ -5,6 +5,8 @@ import com.boydti.rollback.Rollback;
 import com.boydti.rollback.database.SQLDatabase;
 import com.sk89q.jnbt.CompoundTag;
 import com.sk89q.worldedit.history.change.Change;
+import com.sk89q.worldedit.world.biome.BaseBiome;
+
 import java.util.Iterator;
 
 public class RollbackChangeSet extends FaweChangeSet {
@@ -59,5 +61,11 @@ public class RollbackChangeSet extends FaweChangeSet {
     public Iterator<Change> getIterator(boolean dir) {
         return parent.getIterator(dir);
     }
+
+	@Override
+	public void addBiomeChange(int x, int z, BaseBiome from, BaseBiome to) {
+		//Not implemented.
+		
+	}
     
 }
