@@ -149,7 +149,7 @@ public abstract class SQLDatabase extends AbstractLogger {
         return finalCompressedArray;
     }
     
-    private final byte[] buffer = new byte[531441]; //TODO: This is probably awful ( 531441 was from fawe.config.Settings.HISTORY.BUFFER_SIZE )
+    private final byte[] buffer = new byte[531441]; //This is probably awful ( 531441 was from fawe.config.Settings.HISTORY.BUFFER_SIZE )
     
     public CompoundTag toTag(byte[] compressed) {
         if (compressed == null) {
@@ -368,7 +368,7 @@ public abstract class SQLDatabase extends AbstractLogger {
                     stmt.executeUpdate();
                 }
                 try (PreparedStatement stmt = connection.prepareStatement(UPDATE_TIME_BLOCKSNBT.replace("$", table + "").replace("?", "" + shift))) {
-                    stmt.executeUpdate(); //TODO: Error thrown here (https://hastebin.com/nucuxovahu.pl)
+                    stmt.executeUpdate(); //TODO: Error (seemingly) randomly thrown here (https://hastebin.com/nucuxovahu.pl)
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
