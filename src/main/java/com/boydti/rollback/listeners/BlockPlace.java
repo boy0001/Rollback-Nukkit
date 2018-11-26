@@ -10,7 +10,6 @@ import cn.nukkit.item.Item;
 import cn.nukkit.plugin.Plugin;
 import com.boydti.fawe.FaweCache;
 import com.boydti.rollback.LogAPI;
-import com.boydti.rollback.api.AbstractLogger;
 import com.boydti.rollback.config.Loggers;
 
 public class BlockPlace extends BasicListener {
@@ -22,18 +21,16 @@ public class BlockPlace extends BasicListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        Block state = event.getBlock();
-        AbstractLogger logger = LogAPI.getLogger(player.getLevel());
-        int combinedTo = FaweCache.getCombined(state.getId(), state.getDamage());
-        logger.logPlace(player.getName(), state.getFloorX(), state.getFloorY(), state.getFloorZ(), (short) combinedTo, null);
+        Block block = event.getBlock();
+        int combinedTo = FaweCache.getCombined(block.getId(), block.getDamage());
+        LogAPI.getLogger(player.getLevel()).logPlace(player.getName(), block.getFloorX(), block.getFloorY(), block.getFloorZ(), (short) combinedTo, null);
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
         Player player = event.getPlayer();
-        Block block = event.getBlockClicked().getSide(event.getBlockFace());
+        Block block = event.getBlockClicked();
         Item bucket = event.getBucket();
-        int type = bucket.getDamage();
-        LogAPI.getLogger(player.getLevel()).logBlock(player.getName(), block.getFloorX(), block.getFloorY(), block.getFloorZ(), (short) 0, (short) FaweCache.getCombined(type, 0));
-    }
+        LogAPI.getLogger(player.getLevel()).logBlock(player.getName(), block.getFloorX(), block.getFloorY(), block.getFloorZ(), (short) 0, (short) FaweCache.getCombined(bucket.getDamage(), 0));
+        }
 }

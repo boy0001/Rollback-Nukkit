@@ -96,7 +96,7 @@ public abstract class AbstractLogger {
     }
 
     public void logBreak(String name, Block block, boolean creative, boolean track) {
-        logBreak(name, block.getFloorX(), block.getFloorY(), block.getFloorZ(), creative, track);
+        logBreak(name, block.getFloorX(), block.getFloorY() - 1, block.getFloorZ(), creative, track);
     }
 
     public void logBreak(String name, int x, int y, int z, boolean creative, boolean track) {

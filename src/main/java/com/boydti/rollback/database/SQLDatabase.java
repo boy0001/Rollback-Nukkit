@@ -1,6 +1,5 @@
 package com.boydti.rollback.database;
 
-import com.boydti.fawe.config.Settings;
 import com.boydti.fawe.object.RunnableVal;
 import com.boydti.fawe.util.MathMan;
 import com.boydti.fawe.util.TaskManager;
@@ -150,7 +149,7 @@ public abstract class SQLDatabase extends AbstractLogger {
         return finalCompressedArray;
     }
     
-    private final byte[] buffer = new byte[Settings.HISTORY.BUFFER_SIZE];
+    private final byte[] buffer = new byte[531441]; //This is probably awful ( 531441 was from fawe.config.Settings.HISTORY.BUFFER_SIZE )
     
     public CompoundTag toTag(byte[] compressed) {
         if (compressed == null) {
@@ -369,7 +368,7 @@ public abstract class SQLDatabase extends AbstractLogger {
                     stmt.executeUpdate();
                 }
                 try (PreparedStatement stmt = connection.prepareStatement(UPDATE_TIME_BLOCKSNBT.replace("$", table + "").replace("?", "" + shift))) {
-                    stmt.executeUpdate();
+                    stmt.executeUpdate(); //TODO: Error (seemingly) randomly thrown here (https://hastebin.com/nucuxovahu.pl)
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -472,11 +471,13 @@ public abstract class SQLDatabase extends AbstractLogger {
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, prefix + "timestamp", null);
             if (tables.next()) {
-                // Table exists
-                try (PreparedStatement stmt = connection.prepareStatement("SELECT `time` from `" + prefix + "timestamp`")) {
-                    ResultSet r = stmt.executeQuery();
-                    BASE_TIME = r.getLong(1);
-                }
+				// Table exists
+            	while(tables.next()) {
+    				try (PreparedStatement stmt = connection.prepareStatement("SELECT `time` from `" + prefix + "timestamp`")) {
+    					ResultSet r = stmt.executeQuery();
+    					BASE_TIME = r.getLong("time");
+    				}
+            	}
             } else {
                 BASE_TIME = (System.currentTimeMillis() >> TIME_PARTITION);
                 try (Statement stmt = connection.createStatement()) {

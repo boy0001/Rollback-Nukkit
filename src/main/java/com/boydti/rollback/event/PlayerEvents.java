@@ -8,7 +8,6 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.item.Item;
-import cn.nukkit.math.Vector3;
 import cn.nukkit.plugin.Plugin;
 import com.boydti.fawe.FaweCache;
 import com.boydti.fawe.config.BBC;
@@ -19,8 +18,6 @@ import com.boydti.rollback.config.Config;
 import com.boydti.rollback.database.SQLDatabase;
 import com.boydti.rollback.database.SimpleBlockChange;
 import com.boydti.rollback.util.LogUser;
-import com.sk89q.worldedit.WorldVector;
-import com.sk89q.worldedit.WorldVectorFace;
 import java.util.List;
 
 public class PlayerEvents implements Listener {
@@ -53,36 +50,17 @@ public class PlayerEvents implements Listener {
         }
         Block block;
         switch (event.getAction()) {
-            case PlayerInteractEvent.LEFT_CLICK_AIR:
-                block = player.getTargetBlock(64);
+            case LEFT_CLICK_AIR:
+                block = player.getLevelBlock();
                 if (block == null) {
                     return;
                 }
                 break;
-            case PlayerInteractEvent.RIGHT_CLICK_AIR:
-                FawePlayer fp = FawePlayer.wrap(player);
-                com.sk89q.worldedit.entity.Player wePlayer = fp.getPlayer();
-                WorldVectorFace pos = wePlayer.getBlockTraceFace(256, true);
-                if (pos == null) {
-                    return;
-                }
-                WorldVector face = pos.getFaceVector();
-                block = player.getLevel().getBlock(new Vector3(face.getBlockX(), face.getBlockY(), face.getBlockZ()));
-                if (block == null) {
-                    return;
-                }
-                break;
-            case PlayerInteractEvent.RIGHT_CLICK_BLOCK:
+            case RIGHT_CLICK_BLOCK:
                 block = event.getBlock().getSide(event.getFace());
-                break;
-            case PlayerInteractEvent.LEFT_CLICK_BLOCK:
-                block = event.getBlock();
                 break;
             default:
                 return;
-        }
-        if (player.isSneaking()) {
-            block = block.getSide(event.getFace());
         }
         event.setCancelled(true);
         interact(player, block);
@@ -105,12 +83,13 @@ public class PlayerEvents implements Listener {
                     if (changes.isEmpty()) {
                         fp.sendMessage(BBC.color(Config.PREFIX + "No changes."));
                     } else {
+                    	player.sendMessage(BBC.color(Config.PREFIX + "===== (" + fblock.getFloorX() + ", " + fblock.getFloorY() + ", " + fblock.getFloorZ() + ") ====="));
                         for (SimpleBlockChange change : changes) {
                             String name = LogUser.getName(change.player);
                             String age = MainUtil.secToTime((System.currentTimeMillis() - change.timestamp) / 1000);
                             String from = Item.get(FaweCache.getId(change.combinedFrom), FaweCache.getData(change.combinedFrom)).getName();
                             String to = Item.get(FaweCache.getId(change.combinedTo), FaweCache.getData(change.combinedTo)).getName();
-                            player.sendMessage(BBC.color(Config.PREFIX + name + ": " + from + " -> " + to + " (" + age+")"));
+                            player.sendMessage(BBC.color(name + ": " + from + " -> " + to + " (" + age +")"));
                         }
                     }
                 } catch (Exception e) {

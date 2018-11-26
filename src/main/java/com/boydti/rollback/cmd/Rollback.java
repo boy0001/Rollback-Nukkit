@@ -5,7 +5,6 @@ import cn.nukkit.level.Location;
 import com.boydti.fawe.FaweCache;
 import com.boydti.fawe.config.BBC;
 import com.boydti.fawe.object.FawePlayer;
-import com.boydti.fawe.object.RegionWrapper;
 import com.boydti.fawe.object.RunnableVal;
 import com.boydti.fawe.object.changeset.FaweChangeSet;
 import com.boydti.fawe.object.exception.FaweException;
@@ -25,8 +24,8 @@ import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.history.changeset.ChangeSet;
+import com.sk89q.worldedit.regions.Region;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Rollback {
@@ -61,11 +60,10 @@ public class Rollback {
             player.sendMessage(BBC.color(Config.PREFIX + BBC.COMMAND_SYNTAX.format("/rollback " + args[0] + " " + args[1] + " <time>")));
             return;
         }
-        final RegionWrapper[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
+        final Region[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
         // Rollback
         Location loc = player.getLocation();
         final int x = loc.getFloorX();
-        int y = loc.getFloorY();
         final int z = loc.getFloorZ();
         
         if (fp.getMeta("fawe_action") != null) {
@@ -100,9 +98,9 @@ public class Rollback {
                         @Override
                         public void run(SimpleBlockChange change) {
                             BaseBlock block = FaweCache.CACHE_BLOCK[change.combinedFrom];
-                            mutable.x = change.x;
-                            mutable.y = change.y;
-                            mutable.z = change.z;
+                            mutable.setX(change.x);
+                            mutable.setY(change.y);
+                            mutable.setY(change.z);
                             if (change.tileFrom != null) {
                                 block = new BaseBlock(block.getId(), block.getData(), change.tileFrom);
                             }

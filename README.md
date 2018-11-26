@@ -1,4 +1,5 @@
-# WIP rollback for mcpe
+# WIP rollback for NukkitX
+
 ### Simple
  - This can log block breaking and placement (more events will be added later).
  - Quickly inspect blocks by left clicking with a clock (crouch to inspect the adjacent block)
