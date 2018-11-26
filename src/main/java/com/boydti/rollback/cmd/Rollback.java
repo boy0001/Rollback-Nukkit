@@ -60,7 +60,7 @@ public class Rollback {
             player.sendMessage(BBC.color(Config.PREFIX + BBC.COMMAND_SYNTAX.format("/rollback " + args[0] + " " + args[1] + " <time>")));
             return;
         }
-        final RegionWrapper[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
+        final Region[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
         // Rollback
         Location loc = player.getLocation();
         final int x = loc.getFloorX();
