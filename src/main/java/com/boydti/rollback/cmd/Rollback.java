@@ -5,7 +5,6 @@ import cn.nukkit.level.Location;
 import com.boydti.fawe.FaweCache;
 import com.boydti.fawe.config.BBC;
 import com.boydti.fawe.object.FawePlayer;
-import com.boydti.fawe.object.RegionWrapper;
 import com.boydti.fawe.object.RunnableVal;
 import com.boydti.fawe.object.changeset.FaweChangeSet;
 import com.boydti.fawe.object.exception.FaweException;
@@ -25,6 +24,7 @@ import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.history.changeset.ChangeSet;
+import com.sk89q.worldedit.regions.Region;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -60,7 +60,7 @@ public class Rollback {
             player.sendMessage(BBC.color(Config.PREFIX + BBC.COMMAND_SYNTAX.format("/rollback " + args[0] + " " + args[1] + " <time>")));
             return;
         }
-        final RegionWrapper[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
+        final Region[] regions = WEManager.IMP.getMask(fp, FaweMaskManager.MaskType.OWNER);
         // Rollback
         Location loc = player.getLocation();
         final int x = loc.getFloorX();
