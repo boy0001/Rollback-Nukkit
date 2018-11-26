@@ -9,7 +9,7 @@ import cn.nukkit.event.entity.EntityBlockChangeEvent;
 import cn.nukkit.event.entity.EntitySpawnEvent;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
-import cn.nukkit.math.AxisAlignedBB;
+import cn.nukkit.math.SimpleAxisAlignedBB;
 import cn.nukkit.metadata.MetadataValue;
 import cn.nukkit.plugin.Plugin;
 import com.boydti.fawe.FaweCache;
@@ -39,7 +39,7 @@ public class BlockFallListener extends BasicListener {
             Block block = level.getBlock(loc);
             String name = logger.getNameRelative(block);
             if (name == null) {
-                AxisAlignedBB bb = new AxisAlignedBB(loc.getX() - 1, loc.getY() - 1, loc.getZ() - 1, loc.getX() + 1, loc.getY() + 1, loc.getZ() + 1);
+                SimpleAxisAlignedBB bb = new SimpleAxisAlignedBB(loc.getX() - 1, loc.getY() - 1, loc.getZ() - 1, loc.getX() + 1, loc.getY() + 1, loc.getZ() + 1);
                 Entity[] nearby = level.getNearbyEntities(bb, entity);
                 name = LogUser.FALLING_BLOCK.ID;
                 for (Entity ent : nearby) {
