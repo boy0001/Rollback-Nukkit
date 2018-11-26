@@ -14,11 +14,11 @@ buildscript {
 repositories {
     maven {url "https://hub.spigotmc.org/nexus/content/groups/public/"}
     maven {url "http://empcraft.com/maven2"}
-    maven {url "http://repo.mcstats.org/content/repositories/public"}
+    maven {url "http://repo.nukkitx.com/main/"}
     maven {url "http://maven.sk89q.com/repo/"}
     maven {url "http://repo.maven.apache.org/maven2"}
     maven {url "http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/"}
-    maven {url "https://repo.potestas.xyz/"}
+    maven {url "http://ci.regularbox.com/plugin/repository/everything/"}
     maven {url "http://maven.sk89q.com/artifactory/repo/"}
 }
 
